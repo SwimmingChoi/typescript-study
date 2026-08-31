@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeScript 학습 플로우</title>
+<script src="assets/react.production.min.js"></script>
+<script src="assets/react-dom.production.min.js"></script>
+<script src="assets/github-sync.js"></script>
+<script src="assets/dc-core.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<style>/* Broadsheet — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md. */
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("74bec263-462e-454d-8002-b55960e8c98e") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("413e0a29-f546-4782-a9b1-f21b30746e08") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("ef2a7ef9-5e3d-4fcf-a347-d6e7f061a07d") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("ba56cf32-3b94-403e-addb-758a5d319149") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("d3b1dd3f-955e-4ee0-b0ae-cadee9ce6b50") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("27609157-11e4-4cf1-915e-3d089b416b4f") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("1a01b821-f035-4afd-bbfa-76e52bca65d7") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fa0b1ba7-9817-4b09-8a5c-91be3e726847") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("f64ca6c3-4cf1-48ad-bf95-4df8deb7fa40") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("c3bfd559-032d-41bd-a058-a902cc26e58f") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("bb8a983e-ee05-4d62-b7de-b0c7343a421e") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("106657ee-7114-423a-9f02-7b3bb7bb95b7") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("1a01b821-f035-4afd-bbfa-76e52bca65d7") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fa0b1ba7-9817-4b09-8a5c-91be3e726847") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("f64ca6c3-4cf1-48ad-bf95-4df8deb7fa40") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("c3bfd559-032d-41bd-a058-a902cc26e58f") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("bb8a983e-ee05-4d62-b7de-b0c7343a421e") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("106657ee-7114-423a-9f02-7b3bb7bb95b7") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+:root {
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201e1d;
+  --color-accent: #0088b0;
+  --color-accent-2: #d6006c;
+  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+
+  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
+     same step of any role matches the others in visual value. */
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #e9f8ff;
+  --color-accent-200: #cbeeff;
+  --color-accent-300: #99e0ff;
+  --color-accent-400: #62c5ee;
+  --color-accent-500: #38a6cf;
+  --color-accent-600: #1186ac;
+  --color-accent-700: #006786;
+  --color-accent-800: #004961;
+  --color-accent-900: #0a303e;
+
+  --color-accent-2-100: #fff1f4;
+  --color-accent-2-200: #ffdee6;
+  --color-accent-2-300: #ffc0d0;
+  --color-accent-2-400: #ff90b1;
+  --color-accent-2-500: #ff458e;
+  --color-accent-2-600: #d82071;
+  --color-accent-2-700: #aa0b56;
+  --color-accent-2-800: #790e3d;
+  --color-accent-2-900: #4b1528;
+
+  /* The third process ink — review round 3: the deck's print treatments
+     (the CMYK separation and the misregistered plate numerals below) need
+     the full four-color set. Cyan and magenta are the system's own accents;
+     this yellow completes them, muted to the same press-ink register. A
+     print treatment color, not an interface accent — body copy and chrome
+     never take it. */
+  --color-process-yellow: #edbb00;
+
+  --font-heading: "Source Serif 4", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Source Serif 4", system-ui, sans-serif;
+
+  --space-1: 5.0px;
+  --space-2: 10.0px;
+  --space-3: 15.0px;
+  --space-4: 20.0px;
+  --space-6: 30.0px;
+  --space-8: 40.0px;
+
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+
+  /* Elevation — derived from the ground: soft ink-tinted shadows on a
+     light theme, a hairline edge + ambient darkness on a dark one. */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); }
+
+.halftone{position:relative;filter:grayscale(0.35) contrast(1.15);overflow:hidden}
+.halftone::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(0,0,0,0.22) 30%,transparent 32%);
+  background-size:3px 3px;mix-blend-mode:multiply}
+
+/* The four-color separation treatment (review round 3) — a photograph
+   printed as its misregistered process plates, after the Catalogue Three
+   grammar. Markup: a figure.cmyk holding five copies of the image — the
+   first is the layout sizer (hidden), then one per plate, each tagged
+   .sep-c/.sep-m/.sep-y/.sep-k. The plates are extracted live by the SVG
+   feColorMatrix filters in print-plates.js, the system's own defs —
+   inlined in the compiled bundle every template page loads, and a
+   page that links styles.css directly adds
+   <script src="print-plates.js"></script> itself (the defs must be in
+   the document: a data-URI filter reference would not survive Chromium,
+   and external-file references are unreliable across engines) — nudged
+   a few pixels out of register, and multiplied
+   onto the paper ground; the halftone dot screens the recombined print.
+   The plate offsets live with the deck's projection-scale CSS, since
+   misregistration is sized to the output. */
+.cmyk{position:relative;overflow:hidden;background:var(--color-bg)}
+.cmyk img:first-child{opacity:0} /* layout sizer AND the alt-bearing image — opacity
+  keeps it in the accessibility tree (visibility:hidden would drop the figure's only
+  description); fully transparent, it adds nothing to the multiply backdrop */
+.cmyk img+img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.cmyk .sep-c{filter:url(#sep-c)}
+.cmyk .sep-m{filter:url(#sep-m)}
+.cmyk .sep-y{filter:url(#sep-y)}
+.cmyk .sep-k{filter:url(#sep-k)}
+.cmyk::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(0,0,0,0.22) 30%,transparent 32%);
+  background-size:3px 3px;mix-blend-mode:multiply}
+
+/* The one-image separation (review round 9, promoted from the deck in the
+   landing divergence) — the same four plates as ONE compound filter,
+   #sep-all in print-plates.js, for a single swappable image: a .print
+   wrapper inside the figure holds one <image-slot>, and the filter
+   extracts, offsets and multiplies the plates live from whatever the slot
+   shows. Markup: figure.cmyk > .print > image-slot (the page sizes the
+   .print — aspect-ratio, or absolute fill for bleeds). Hover resolves
+   the print into the photograph — the pressman checking registration on
+   the light table — so the source shows crisp and any swap chrome stays
+   legible; only the reduced-motion fallback below still lifts as a
+   single cut (a url() filter cannot CSS-transition; the press driver
+   animates the defs instead). */
+.cmyk .print{position:relative;width:100%;filter:url(#sep-all)}
+/* no hover end-state swap: the press driver (print-plates.js) eases the
+   plates into register while purifying their inks to the pure-process
+   separation on the same curve, so the converged four-plate merge IS
+   the photograph (their multiply equals SourceGraphic by construction)
+   — no cut anywhere on the animated path */
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .cmyk .print:hover{filter:none} /* without the driver (it stands down on
+    exactly these conditions), hover stays the old single cut to the
+    crisp source */
+}
+.cmyk .print image-slot{width:100%;height:100%;display:block}
+
+/* The plate numeral (review rounds 3-4) — display figures set as
+   misregistered process plates, the catalog's cover grammar. Review
+   round 4 (Barron): THREE plates — C, M, Y only, no black plate — so the
+   dark core comes entirely from the C×M×Y multiply overlap (the inks
+   product to exact black), with the fringes the registration drift; and
+   the spread pulled in by half (less jumbled: one figure with plate
+   fringes rather than figures sliding apart). Markup: a .cmyk-num holding
+   a .paper span (the white of the sheet: the glyph's union, built from
+   offset text-shadow copies) and three .plate spans. The construction
+   carries its own ground (--cmyk-num-ground, defaulting to paper) painted
+   on its padding box, so the multiply plates always have their backdrop
+   even inside an isolated stacking context (entrance animations); the
+   padding bleeds wider than any plate offset and the negative margin
+   hands the layout box back. Offsets are em-scaled to the glyph. The
+   .paper span carries the text once for assistive tech; the .plate spans
+   are aria-hidden repeats. */
+.cmyk-num{--cmyk-num-ground:var(--color-bg);
+  position:relative;width:fit-content;line-height:0.9;
+  font-feature-settings:"pnum" 1;
+  background:var(--cmyk-num-ground);padding:0.12em;margin:-0.12em}
+.cmyk-num .paper{color:var(--color-bg); /* the white of the sheet — always paper,
+  whatever the ground: the plates read as printed on paper even when the
+  surrounding page is ink */
+  text-shadow:0.036em 0.025em 0 var(--color-bg),-0.031em -0.023em 0 var(--color-bg)}
+.cmyk-num .plate{position:absolute;inset:0.12em;mix-blend-mode:multiply;
+  text-box:trim-both cap alphabetic /* the host trims to its cap box; each
+  absolute plate must trim its own line the same way, or its glyphs sit a
+  half-leading below the paper union */}
+.cmyk-num .plate-c{color:var(--color-accent)}
+
+/* The plate headline (divergence round 3, Barron: "use both" — the
+   photograph's plates AND the cover grammar's text plates, on the same
+   page). The same three-plate construction as .cmyk-num — paper span
+   carrying the real text, C/M/Y plate repeats, dark core from the
+   multiply overlap — at HALF the numeral's round-4 offsets: the serif's
+   display hairlines are thinner than the numeral strokes the spread was
+   measured on, and the full offsets swallow them whole (probed at the
+   hero's 80px — the fringes read as an anaglyph poster, not a breath
+   out of register) — recut for display
+   headlines that sit in running text blocks on the page's own paper:
+   no ground painting and no padding bleed (the numeral's ground exists
+   for isolated stacking contexts; a headline on the page multiplies
+   straight onto the sheet), no width:fit-content and no line-height
+   override (the host display class owns its metrics — apply this to
+   each .line, which is position:relative for its plates), and the
+   plates are inert to the hand (pointer-events/user-select none, so a
+   triple-click selects the headline once, not four times). Plates take
+   the same pointer lean as .cmyk-num. */
+.cmyk-head{position:relative}
+.cmyk-head .paper{color:var(--color-bg);
+  text-shadow:0.027em 0.0185em 0 var(--color-bg),-0.0245em -0.0175em 0 var(--color-bg)
+  /* the union's copies sit at the construction's halved plate offsets
+     PLUS the full lean (0.018+0.009 / 0.0125+0.006, and mirrored), so
+     the union still backs the plates at viewport-edge lean — invisible
+     on the page's own paper, load-bearing on any other ground */}
+.cmyk-head .plate{position:absolute;inset:0;mix-blend-mode:multiply;
+  pointer-events:none;user-select:none;
+  text-box:trim-both cap alphabetic /* match the host's trim, or the
+  plates sit a half-leading below the paper union */}
+.cmyk-head .plate-c{color:var(--color-accent)}
+.cmyk-head .plate-m{color:var(--color-accent-2);
+  translate:calc(0.018em + 0.009em*var(--press-nx, 0)) calc(0.0125em + 0.006em*var(--press-ny, 0))}
+.cmyk-head .plate-y{color:var(--color-process-yellow);
+  translate:calc(-0.0155em + 0.009em*var(--press-nx, 0)) calc(-0.0115em + 0.006em*var(--press-ny, 0))}
+.cmyk-num .plate-m{color:var(--color-accent-2);
+  translate:calc(0.036em + 0.018em*var(--press-nx, 0)) calc(0.025em + 0.0125em*var(--press-ny, 0))}
+.cmyk-num .plate-y{color:var(--color-process-yellow);
+  translate:calc(-0.031em + 0.018em*var(--press-nx, 0)) calc(-0.023em + 0.0125em*var(--press-ny, 0))}
+/* --press-nx/--press-ny: the pointer lean as a bare -1..1 factor,
+   published on :root by the press driver (print-plates.js) and zero
+   whenever the driver stands down. Each construction scales the lean to
+   its own spread (half of it, here as everywhere) so the moving plates
+   drift a breath toward the cursor and the C plate holds. */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Components — built with the tokens above. Plain CSS
+   on plain HTML: no JavaScript, no build step. Each class is documented in
+   readme.md and demonstrated in foundations/ and components/.
+   ══════════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
+}
+h1 { font-size: 42px; }
+h2 { font-size: 32px; }
+h3 { font-size: 25px; }
+h4 { font-size: 20px; }
+h5 { font-size: 16px; }
+h6 { font-size: 13px; }
+h6 { letter-spacing: 0.08em; text-transform: uppercase; }
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+figcaption {
+  font-size: 11px; margin-top: var(--space-1);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.text-muted { color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — rules — */
+.hr {
+  height: 1px; border: 0; margin: var(--space-4) 0;
+  background: var(--color-divider);
+}
+
+/* — buttons — */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 14px; line-height: 1.2; color: var(--color-text); /* matches the .input's 14px —
+     the pair sits side by side in sign-up rows */
+  background: transparent; border: 1px solid transparent;
+  padding: var(--space-2) calc(var(--space-3) * 1.2);
+  border-radius: var(--radius-md);
+}
+.btn svg { display: block; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.btn-primary:hover { background: var(--color-accent-600); }
+.btn-primary:active { background: var(--color-accent-700); }
+.btn-secondary { border-color: var(--color-divider); }
+.btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+.btn-icon { width: 36px; height: 36px; padding: 0; }
+.btn-block { width: 100%; margin-top: var(--space-2); }
+
+/* — forms — */
+.field > label {
+  display: block; font-size: 12px; margin-bottom: 5px;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+.input {
+  width: 100%; min-height: 36px; padding: 6px 10px; font: inherit;
+  font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.input::placeholder { color: color-mix(in srgb, var(--color-text) 65%, transparent); opacity: 1; }
+  /* explicit, measured: the browser default gray misses the 4.5:1 small-text bar on
+     the surface fill; 65% ink measures 4.8:1 there, still a step quieter than typed
+     text (opacity:1 overrides Firefox's default placeholder fade) */
+.input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+textarea.input { min-height: 90px; resize: vertical; }
+.radio { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
+.radio input, .seg-opt input {
+  position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+}
+.radio .dot {
+  width: 16px; height: 16px; flex: none; border-radius: 50%;
+  border: 1.5px solid var(--color-divider);
+}
+.radio:hover .dot { border-color: var(--color-accent); }
+.radio input:checked + .dot {
+  border-color: var(--color-accent); background: var(--color-accent);
+  box-shadow: inset 0 0 0 4px var(--color-bg);
+}
+.radio input:focus-visible + .dot { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.seg {
+  display: inline-flex; overflow: hidden;
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.seg-opt {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px; font-size: 13px; cursor: pointer;
+}
+.seg-opt + .seg-opt { border-left: 1px solid var(--color-divider); }
+.seg-opt:has(input:checked) { background: var(--color-accent); color: var(--color-bg); }
+.seg-opt:not(:has(input:checked)):hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.seg-opt:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+
+/* — cards — */
+.card {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface);
+}
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.card-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 17px; line-height: 1.2;
+}
+.card-body { margin: 0; font-size: 13px; opacity: 0.8; flex: 1; }
+.card-meta {
+  display: flex; align-items: center; gap: 6px; font-size: 11px;
+  color: color-mix(in srgb, var(--color-text) 50%, transparent);
+}
+.elev-sm { box-shadow: var(--shadow-sm); }
+.elev-md { box-shadow: var(--shadow-md); }
+.elev-lg { box-shadow: var(--shadow-lg); }
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px;
+  letter-spacing: 0.02em; padding: 3px 10px;
+  border-radius: calc(var(--radius-md) * 0.75);
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — navigation — */
+.nav {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: none;
+}
+.nav-brand {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 18px; margin-right: auto;
+}
+.nav a { color: inherit; text-decoration: none; font-size: 14px; }
+.nav a:hover, .nav a[aria-current='page'] { color: var(--color-accent); }
+
+/* — tables — */
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  padding: var(--space-2); border-bottom: 1px solid var(--color-divider);
+}
+.table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
+
+/* — dialog — */
+.dialog-backdrop {
+  position: fixed; inset: 0; display: grid; place-items: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--color-neutral-900) 50%, transparent);
+}
+.dialog {
+  width: min(440px, 100%); display: flex; flex-direction: column; gap: var(--space-3);
+  padding: var(--space-4); border-radius: var(--radius-lg);
+  background: var(--color-surface); box-shadow: var(--shadow-lg);
+}
+.dialog-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 20px;
+}
+.dialog-body { font-size: 14px; opacity: 0.85; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
+
+</style>
+<script src="assets/broadsheet.js"></script>
+<style>
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
+  a { color: var(--color-accent); }
+  a:hover { color: var(--color-accent-700); }
+  input:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+</style>
+</helmet>
+<div style="max-width: 1080px; margin: 0 auto; padding: 60px 40px 120px; font-size: 16px; line-height: 1.55; text-wrap: pretty;">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 50px;">
+    <div style="max-width: 620px;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 14px;">학습 플로우 · 총 5~6주</div>
+      <h1 style="font-size: 54px; margin: 0 0 12px; letter-spacing: -0.02em;">TypeScript 학습 플로우</h1>
+      <p style="margin: 0; font-size: 17px; opacity: 0.72;">에이전트가 짠 TS 코드를 읽고, 이상한 곳을 잡아내고, 방향을 지시할 수 있는 수준까지. 깊은 전문가가 아니라 검증자·설계자 역할에 필요한 만큼만.</p>
+    </div>
+    <div style="min-width: 240px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <div style="font-size: 46px; font-weight: 600; line-height: 1; color: var(--color-accent);">{{ pct }}</div>
+        <div style="font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">완료 {{ totalCount }}</div>
+      </div>
+      <div style="margin-top: 14px; height: 3px; background: color-mix(in srgb, var(--color-text) 12%, transparent);">
+        <div style="{{ totalBar }}"></div>
+      </div>
+      <div style="display: flex; gap: 16px; margin-top: 14px;">
+        <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ toggleHide }}">{{ hideLabel }}</button>
+        <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ resetAll }}">전체 초기화</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: 13px 2px; margin-bottom: 44px; display: flex; align-items: center; gap: 11px; flex-wrap: wrap;">
+    <div style="{{ ghDot }}"></div>
+    <div style="font-size: 13.5px; opacity: 0.8;">{{ ghLabel }}</div>
+    <div style="flex: 1 1 30px;"></div>
+    <sc-if value="{{ ghShowForce }}" hint-placeholder-val="{{ false }}">
+      <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ ghForce }}">이 브라우저 내용으로 덮어쓰기</button>
+    </sc-if>
+    <sc-if value="{{ ghShowActions }}" hint-placeholder-val="{{ false }}">
+      <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ ghSyncNow }}">지금 저장</button>
+      <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ ghReload }}">다시 불러오기</button>
+      <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; opacity: 0.5; color: var(--color-text); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ ghDisconnect }}">연결 해제</button>
+    </sc-if>
+    <sc-if value="{{ ghShowConnect }}" hint-placeholder-val="{{ true }}">
+      <button style="background: none; border: 0; padding: 0; font-family: inherit; font-size: 13px; color: var(--color-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;" sc-camel-on-click="{{ ghOpenForm }}">GitHub 연결</button>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ ghFormOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="card" style="max-width: 620px; margin: -26px 0 44px;">
+      <div class="card-body">
+        <div class="card-kicker">GitHub 동기화</div>
+        <div style="font-size: 14px; opacity: 0.72; margin: 10px 0 18px; line-height: 1.5;">
+          체크할 때마다 이 페이지가 저장소에 <code>progress.json</code> 과 <code>typescript-study-plan.md</code> 를 직접 커밋합니다.
+          토큰은 이 브라우저의 localStorage 에만 저장되고 GitHub 외에는 전송되지 않습니다.
+        </div>
+        <div style="display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 9px 14px; align-items: center;">
+          <label style="font-size: 13px; opacity: 0.65;">Owner</label>
+          <input class="input" placeholder="GitHub 사용자명" value="{{ ghOwner }}" sc-camel-on-change="{{ ghOnOwner }}">
+          <label style="font-size: 13px; opacity: 0.65;">Repo</label>
+          <input class="input" placeholder="저장소 이름" value="{{ ghRepo }}" sc-camel-on-change="{{ ghOnRepo }}">
+          <label style="font-size: 13px; opacity: 0.65;">Branch</label>
+          <input class="input" placeholder="main" value="{{ ghBranch }}" sc-camel-on-change="{{ ghOnBranch }}">
+          <label style="font-size: 13px; opacity: 0.65;">Token</label>
+          <input class="input" type="password" placeholder="github_pat_..." value="{{ ghToken }}" sc-camel-on-change="{{ ghOnToken }}">
+        </div>
+        <sc-if value="{{ ghHasFormErr }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 14px; font-size: 13.5px; color: var(--color-accent-2);">{{ ghFormErr }}</div>
+        </sc-if>
+        <div style="display: flex; gap: 10px; margin-top: 18px; align-items: center;">
+          <button class="btn btn-primary" style="font-family: inherit; cursor: pointer;" sc-camel-on-click="{{ ghSubmit }}">{{ ghSubmitLabel }}</button>
+          <button class="btn btn-ghost" style="font-family: inherit; cursor: pointer;" sc-camel-on-click="{{ ghCancelForm }}">취소</button>
+        </div>
+        <div style="font-size: 12.5px; opacity: 0.6; margin-top: 16px; line-height: 1.6;">
+          토큰은 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained personal access token</a> 에서 만듭니다 ·
+          Repository access → Only select repositories → 이 저장소 · Permissions → Repository permissions → <strong>Contents: Read and write</strong>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 34px; margin-bottom: 76px; max-width: 900px;">
+    <div>
+      <h6 style="margin: 0 0 8px; opacity: 0.55;">최종 산출물</h6>
+      <div style="font-size: 20px;">직접 짠 MCP 서버 1개</div>
+    </div>
+    <div>
+      <h6 style="margin: 0 0 8px; opacity: 0.55;">전제</h6>
+      <div style="font-size: 15px; opacity: 0.8;">Python 가능 → 프로그래밍 입문 내용은 생략</div>
+    </div>
+    <div>
+      <h6 style="margin: 0 0 8px; opacity: 0.55;">페이스</h6>
+      <div style="font-size: 15px; opacity: 0.8;">주 3~4회, 회당 30~60분</div>
+    </div>
+  </div>
+
+  <sc-for list="{{ stages }}" as="s" hint-placeholder-count="6">
+    <section style="display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 30px; margin-bottom: 72px;">
+      <div style="padding-top: 6px;">
+        <div style="font-size: 64px; font-weight: 600; line-height: 0.9; color: var(--color-accent-2); letter-spacing: -0.03em;">{{ s.n }}</div>
+        <div style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-top: 10px;">{{ s.dur }}</div>
+        <div style="font-size: 12px; letter-spacing: 0.06em; opacity: 0.5; margin-top: 4px;">{{ s.count }}</div>
+      </div>
+      <div>
+        <h2 style="font-size: 30px; margin: 0 0 6px;">{{ s.title }}</h2>
+        <sc-if value="{{ s.book }}" hint-placeholder-val="{{ true }}">
+          <div style="font-style: italic; font-size: 15px; opacity: 0.7; margin-bottom: 18px;">교재 · {{ s.book }}</div>
+        </sc-if>
+        <sc-if value="{{ s.linkLabel }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin: 14px 0 6px;">{{ s.linkLabel }}</div>
+        </sc-if>
+        <sc-for list="{{ s.links }}" as="lk" hint-placeholder-count="0">
+          <div style="font-size: 14.5px; margin-bottom: 4px;">
+            <a href="{{ lk.url }}" target="_blank" rel="noopener" style="color: var(--color-accent-700); text-decoration: underline; text-underline-offset: 3px;">{{ lk.t }}</a>
+          </div>
+        </sc-for>
+        <div style="height: 2px; width: 100%; max-width: 520px; background: color-mix(in srgb, var(--color-text) 10%, transparent); margin: 16px 0 22px;">
+          <div style="{{ s.bar }}"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px;">
+          <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="4">
+            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 7px 8px 7px 0; cursor: pointer;" sc-camel-on-click="{{ it.toggle }}" role="checkbox" sc-camel-tab-index="{{ 0 }}" sc-camel-on-key-down="{{ it.onKey }}" aria-checked="{{ it.done }}">
+              <div style="{{ it.boxStyle }}">{{ it.mark }}</div>
+              <div style="{{ it.textStyle }}">{{ it.t }}<sc-if value="{{ it.hi }}" hint-placeholder-val="{{ false }}"><span style="color: var(--color-accent-2); font-style: italic;"> ← {{ it.hi }}</span></sc-if></div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-for list="{{ s.notes }}" as="note" hint-placeholder-count="0">
+          <div style="font-size: 14.5px; opacity: 0.72; padding-left: 30px; margin-bottom: 6px;">{{ note }}</div>
+        </sc-for>
+        <div style="margin-top: 16px; padding-left: 30px; max-width: 620px;">
+          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">적용 과제</div>
+          <div style="font-size: 15px; font-style: italic;">{{ s.task }}</div>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; margin: 100px 0 90px; max-width: 980px;">
+    <div>
+      <h2 style="font-size: 26px; margin: 0 0 20px;">학습 방식 규칙</h2>
+      <ol style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 12px; font-size: 15.5px;">
+        <li>개념 하나 읽으면 → 클로드코드한테 그 개념으로 작은 코드 요청 → 한 줄씩 설명 요청 → <em>내 말로 다시 설명</em></li>
+        <li>모르는 에러 메시지는 바로 검색하지 말고, 먼저 클로드에 "이 에러가 왜 나는지 힌트만" 요청</li>
+        <li>완성보다 <em>읽기 능력</em> 우선. 한 주에 하나는 남이 짠(에이전트가 짠) 코드 리뷰</li>
+        <li>막히면 파이썬으로 먼저 짜보고 옮기기</li>
+      </ol>
+    </div>
+    <div>
+      <h2 style="font-size: 26px; margin: 0 0 6px;">에이전트 코드 리뷰 체크리스트</h2>
+      <div style="font-size: 13px; opacity: 0.55; margin-bottom: 16px;">계속 업데이트 · {{ reviewCount }}</div>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <sc-for list="{{ review }}" as="it" hint-placeholder-count="5">
+          <div style="display: flex; gap: 14px; align-items: flex-start; padding: 7px 8px 7px 0; cursor: pointer;" sc-camel-on-click="{{ it.toggle }}" role="checkbox" sc-camel-tab-index="{{ 0 }}" sc-camel-on-key-down="{{ it.onKey }}" aria-checked="{{ it.done }}">
+            <div style="{{ it.boxStyle }}">{{ it.mark }}</div>
+            <div style="{{ it.textStyle }}">{{ it.t }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-bottom: 90px;">
+    <h2 style="font-size: 26px; margin: 0 0 18px;">진행 로그</h2>
+    <sc-raw-table class="table" style="max-width: 900px;">
+      <sc-raw-thead>
+        <sc-raw-tr>
+          <sc-raw-th style="width: 130px;">날짜</sc-raw-th>
+          <sc-raw-th>한 것</sc-raw-th>
+          <sc-raw-th>막힌 것 / 메모</sc-raw-th>
+          <sc-raw-th style="width: 40px;"></sc-raw-th>
+        </sc-raw-tr>
+      </sc-raw-thead>
+      <sc-raw-tbody>
+        <sc-for list="{{ log }}" as="row" hint-placeholder-count="1">
+          <sc-raw-tr>
+            <sc-raw-td><input class="input" style="border: 0; background: transparent; padding: 6px 4px;" placeholder="MM/DD" value="{{ row.d }}" sc-camel-on-change="{{ row.onD }}"></sc-raw-td>
+            <sc-raw-td><input class="input" style="border: 0; background: transparent; padding: 6px 4px;" placeholder="예: 2단계 Narrowing" value="{{ row.w }}" sc-camel-on-change="{{ row.onW }}"></sc-raw-td>
+            <sc-raw-td><input class="input" style="border: 0; background: transparent; padding: 6px 4px;" placeholder="막힌 것, 메모" value="{{ row.m }}" sc-camel-on-change="{{ row.onM }}"></sc-raw-td>
+            <sc-raw-td><button style="background: none; border: 0; font-family: inherit; font-size: 15px; opacity: 0.4; cursor: pointer; color: var(--color-text);" sc-camel-on-click="{{ row.remove }}" aria-label="행 삭제">×</button></sc-raw-td>
+          </sc-raw-tr>
+        </sc-for>
+      </sc-raw-tbody>
+    </sc-raw-table>
+    <button class="btn btn-ghost" style="margin-top: 12px; font-family: inherit; cursor: pointer;" sc-camel-on-click="{{ addRow }}">+ 행 추가</button>
+  </section>
+
+  <section style="max-width: 700px;">
+    <h2 style="font-size: 26px; margin: 0 0 18px;">질문 모음</h2>
+    <div style="font-size: 13px; opacity: 0.55; margin: -12px 0 16px;">다음 세션에 물어볼 것</div>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <input class="input" style="flex: 1;" placeholder="질문 적어두기" value="{{ qInput }}" sc-camel-on-change="{{ onQInput }}" sc-camel-on-key-down="{{ onQKey }}">
+      <button class="btn btn-primary" style="font-family: inherit; cursor: pointer;" sc-camel-on-click="{{ addQ }}">추가</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <sc-for list="{{ qs }}" as="q" hint-placeholder-count="0">
+        <div style="display: flex; gap: 12px; align-items: baseline;">
+          <span style="color: var(--color-accent);">—</span>
+          <span style="flex: 1; font-size: 15.5px;">{{ q.t }}</span>
+          <button style="background: none; border: 0; font-family: inherit; font-size: 15px; opacity: 0.4; cursor: pointer; color: var(--color-text);" sc-camel-on-click="{{ q.remove }}" aria-label="질문 삭제">×</button>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{}">
+const STAGES = [
+  {
+    n: '0', title: '환경 세팅', dur: '1일', book: null,
+    items: [
+      'Node.js LTS 설치, node -v / npm -v 확인',
+      'VS Code + 확장: ESLint, Prettier',
+      '연습용 폴더 만들고 npm init -y → npm i -D typescript tsx → npx tsc --init',
+      'hello.ts 작성 후 npx tsx hello.ts 실행되는지 확인'
+    ],
+    links: [
+      { t: 'Node.js 다운로드 (LTS)', url: 'https://nodejs.org/ko/download' },
+      { t: 'tsconfig 옵션 레퍼런스', url: 'https://www.typescriptlang.org/tsconfig/' }
+    ],
+    task: '클로드코드한테 "이 tsconfig.json 옵션들 중 초보가 알아야 할 5개만 설명해줘"'
+  },
+  {
+    n: '1', title: 'JS 핵심만', dur: '1주', book: 'ko.javascript.info "코어 자바스크립트" 파트',
+    items: [
+      '변수(let/const), 함수, 화살표 함수',
+      '객체·배열, 구조 분해, 스프레드',
+      'this, 클로저 (파이썬과 다른 점 위주로)',
+      { t: '프라미스, async/await, 이벤트 루프', hi: '가장 중요' },
+      '모듈 (import/export)'
+    ],
+    notes: ['파이썬 대응표 만들기: 리스트 컴프리헨션 ↔ map/filter, dict ↔ 객체/Map, with ↔ 없음 등'],
+    links: [
+      { t: '코어 자바스크립트 (ko.javascript.info)', url: 'https://ko.javascript.info/js' },
+      { t: '프라미스와 async/await 챕터', url: 'https://ko.javascript.info/async' },
+      { t: '이벤트 루프', url: 'https://ko.javascript.info/event-loop' }
+    ],
+    task: '파이썬으로 짜본 작은 스크립트 하나를 JS로 옮기기'
+  },
+  {
+    n: '2', title: 'TS 타입 기초', dur: '1.5주', book: 'TypeScript 공식 핸드북 + Total TypeScript "Beginner\'s TypeScript"',
+    items: [
+      'Everyday Types: 기본 타입, 배열, any vs unknown, 유니온, 타입 별칭 vs 인터페이스',
+      'Narrowing: typeof, in, 판별 유니온(discriminated union)',
+      '함수 타입, 옵셔널/기본값, 오버로드 (읽을 줄만)',
+      'Object Types: readonly, 인덱스 시그니처',
+      'strict 모드에서 에러 나는 이유 이해하기'
+    ],
+    links: [
+      { t: '공식 핸드북 — Everyday Types', url: 'https://www.typescriptlang.org/docs/handbook/2/everyday-types.html' },
+      { t: '공식 핸드북 — Narrowing', url: 'https://www.typescriptlang.org/docs/handbook/2/narrowing.html' },
+      { t: '핸드북 한국어 번역', url: 'https://typescript-kr.github.io/' },
+      { t: "Total TypeScript — Beginner's TypeScript (무료)", url: 'https://www.totaltypescript.com/tutorials/beginners-typescript' }
+    ],
+    task: '1단계 스크립트에 타입 붙이기 → 클로드코드한테 리뷰 요청'
+  },
+  {
+    n: '3', title: '제네릭 · 유틸리티 · 모듈', dur: '1주', book: null,
+    items: [
+      '제네릭 함수/타입, 제약(extends)',
+      '유틸리티 타입: Partial, Pick, Omit, Record, ReturnType',
+      'keyof, typeof, 조건부 타입 (읽을 줄만)',
+      '외부 라이브러리 타입 읽기 (node_modules/@types, .d.ts)',
+      'zod로 런타임 검증 + 타입 추론 (z.infer)'
+    ],
+    links: [
+      { t: '핸드북 — Generics', url: 'https://www.typescriptlang.org/docs/handbook/2/generics.html' },
+      { t: '핸드북 — Utility Types', url: 'https://www.typescriptlang.org/docs/handbook/utility-types.html' },
+      { t: 'zod 공식 문서', url: 'https://zod.dev/' }
+    ],
+    task: '클로드코드가 짠 코드에서 제네릭 쓰인 부분 3곳 찾아 설명 요청 → 내가 다시 설명'
+  },
+  {
+    n: '4', title: '미니 프로젝트: MCP 서버', dur: '1주', book: null,
+    items: [
+      '@modelcontextprotocol/sdk로 도구 1개짜리 서버 뼈대 만들기',
+      '도구 입력 스키마를 zod로 정의',
+      '클로드코드/데스크톱에 연결해서 실제 호출 확인',
+      '도구 2~3개로 확장 (예: 파일 검색, 간단한 계산, 외부 API 호출)'
+    ],
+    notes: ['규칙: 뼈대는 클로드코드가 짜고, 도구 하나는 반드시 내가 직접 작성'],
+    links: [
+      { t: 'MCP 공식 문서', url: 'https://modelcontextprotocol.io/' },
+      { t: 'TypeScript SDK (GitHub)', url: 'https://github.com/modelcontextprotocol/typescript-sdk' },
+      { t: '서버 만들기 퀵스타트', url: 'https://modelcontextprotocol.io/quickstart/server' }
+    ],
+    task: '완성 후 클로드코드한테 "이 코드의 문제점 3개" 요청 → 동의/반박 판단해보기'
+  },
+  {
+    n: '5', title: '좋은 TS 기준 잡기', dur: '이후 계속', book: '『이펙티브 타입스크립트』 (하루 1~2항목)',
+    items: [
+      'any 남발 줄이기, 타입 단언(as) 최소화',
+      '타입과 값의 구분, 타입 좁히기 습관',
+      '에이전트 코드 리뷰 체크리스트 만들기'
+    ],
+    links: [
+      { t: 'Effective TypeScript 저자 블로그', url: 'https://effectivetypescript.com/' }
+    ],
+    task: '회사 프로젝트에서 TS로 붙일 만한 부분 하나 골라 설계 초안 작성'
+  }
+];
+
+const REVIEW = [
+  'any / as / ! 가 왜 쓰였는지 설명 가능한가',
+  'async 함수에 await 빠진 곳은 없는가',
+  '외부 입력(API, 파일)에 런타임 검증이 있는가',
+  '에러 처리 없이 삼켜지는 promise가 있는가',
+  '함수 하나가 너무 많은 일을 하지 않는가'
+];
+
+const KEY = 'ts-study-plan-v1';
+const PROGRESS_PATH = 'progress.json';
+const PLAN_PATH = 'typescript-study-plan.md';
+const PUSH_DEBOUNCE = 1500;   // 마지막 클릭 뒤 이만큼 조용하면 한 커밋으로 묶어서 올린다
+const PULL_THROTTLE = 30000;  // 탭에 다시 돌아왔을 때 최소 이 간격으로만 다시 읽는다
+
+const TOTAL = STAGES.reduce((n, s) => n + s.items.length, 0) + REVIEW.length;
+
+/* ---------- 마크다운 생성 ---------- */
+/* typescript-study-plan.md 는 이 함수가 만든다. 손으로 고치면 다음 동기화 때 덮어써진다. */
+
+const MD_INTRO = [
+  '## 목표',
+  '- 에이전트(클로드코드)가 짠 TS 코드를 **읽고, 이상한 곳을 잡아내고, 방향을 지시**할 수 있는 수준',
+  '- 깊은 전문가가 아니라 **검증자·설계자** 역할에 필요한 만큼만',
+  '- 최종 산출물: 직접 짠 **MCP 서버 1개**',
+  '',
+  '## 전제',
+  '- Python 가능 → 프로그래밍 입문 내용은 생략',
+  '- 주 3~4회, 회당 30~60분 기준 (총 5~6주)',
+  '- 각 단계 끝에 클로드코드로 "적용 과제" 수행'
+];
+
+const MD_RULES = [
+  '## 학습 방식 규칙',
+  '1. 개념 하나 읽으면 → 클로드코드한테 그 개념으로 작은 코드 요청 → 한 줄씩 설명 요청 → **내 말로 다시 설명**',
+  '2. 모르는 에러 메시지는 바로 검색하지 말고, 먼저 클로드에 "이 에러가 왜 나는지 힌트만" 요청',
+  '3. 완성보다 **읽기 능력** 우선. 한 주에 하나는 남이 짠(에이전트가 짠) 코드 리뷰',
+  '4. 막히면 파이썬으로 먼저 짜보고 옮기기'
+];
+
+function itemText(raw) {
+  if (typeof raw === 'string') return raw;
+  return raw.hi ? raw.t + ' ← **' + raw.hi + '**' : raw.t;
+}
+
+function box(done) { return done ? '- [x] ' : '- [ ] '; }
+
+function buildMarkdown(data) {
+  const checks = data.checks || {};
+  const L = [];
+
+  L.push('# TypeScript 학습 플로우');
+  L.push('');
+  L.push('<!-- 이 파일은 planner(index.html)가 자동으로 생성합니다. 직접 수정하면 다음 동기화 때 덮어써집니다. -->');
+  L.push('');
+  const done = Object.keys(checks).length;
+  L.push('진행률 **' + Math.round((done / TOTAL) * 100) + '%** (' + done + ' / ' + TOTAL + ') · 최종 갱신 ' + (data.updatedAt || '-'));
+  L.push('');
+  MD_INTRO.forEach((l) => L.push(l));
+  L.push('');
+  L.push('---');
+  L.push('');
+
+  STAGES.forEach((s, si) => {
+    L.push('## ' + s.n + '단계 — ' + s.title + ' (' + s.dur + ')');
+    if (s.book) { L.push('교재: ' + s.book); L.push(''); }
+    s.items.forEach((raw, ii) => {
+      L.push(box(!!checks['s' + si + '-' + ii]) + itemText(raw));
+    });
+    (s.notes || []).forEach((n) => L.push('- ' + n));
+    L.push('- 적용 과제: ' + s.task);
+    if (s.links && s.links.length) {
+      L.push('');
+      L.push('참고 링크');
+      s.links.forEach((lk) => L.push('- [' + lk.t + '](' + lk.url + ')'));
+    }
+    L.push('');
+  });
+
+  L.push('---');
+  L.push('');
+  MD_RULES.forEach((l) => L.push(l));
+  L.push('');
+  L.push('## 에이전트 코드 리뷰 체크리스트 (계속 업데이트)');
+  REVIEW.forEach((raw, i) => L.push(box(!!checks['r-' + i]) + itemText(raw)));
+  L.push('');
+  L.push('---');
+  L.push('');
+
+  L.push('## 진행 로그');
+  L.push('| 날짜 | 한 것 | 막힌 것 / 메모 |');
+  L.push('|------|-------|----------------|');
+  const rows = (data.log || []).filter((r) => r.d || r.w || r.m);
+  if (!rows.length) L.push('| | | |');
+  else rows.forEach((r) => L.push('| ' + (r.d || '') + ' | ' + (r.w || '') + ' | ' + (r.m || '') + ' |'));
+  L.push('');
+
+  L.push('## 질문 모음 (다음 세션에 물어볼 것)');
+  const qs = data.qs || [];
+  if (!qs.length) L.push('-');
+  else qs.forEach((q) => L.push('- ' + q));
+  L.push('');
+
+  return L.join('\n');
+}
+
+/* ---------- 상대 시각 ---------- */
+
+function ago(ts) {
+  if (!ts) return '';
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 10) return '방금 전';
+  if (s < 60) return s + '초 전';
+  if (s < 3600) return Math.floor(s / 60) + '분 전';
+  if (s < 86400) return Math.floor(s / 3600) + '시간 전';
+  return Math.floor(s / 86400) + '일 전';
+}
+
+class Component extends DCLogic {
+  state = {
+    checks: {},
+    log: [{ d: '', w: '', m: '' }],
+    qs: [],
+    qInput: '',
+    hideDone: false,
+    loaded: false,
+    updatedAt: '',
+
+    // GitHub 동기화
+    syncState: 'off',   // off | pulling | saving | synced | error | conflict
+    syncMsg: '',
+    lastSync: 0,
+    tick: 0,
+    formOpen: false,
+    formErr: '',
+    formBusy: false,
+    fOwner: '',
+    fRepo: '',
+    fBranch: 'main',
+    fToken: ''
+  };
+
+  /* ---------- 로컬 저장 ---------- */
+
+  componentDidMount() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { saved = null; }
+    const base = saved ? {
+      checks: saved.checks || {},
+      log: (saved.log && saved.log.length) ? saved.log : [{ d: '', w: '', m: '' }],
+      qs: saved.qs || [],
+      updatedAt: saved.updatedAt || ''
+    } : {};
+    this.setState(Object.assign({ loaded: true }, base));
+
+    this._baseRemoteAt = null;
+    this._lastPull = 0;
+
+    this._onFocus = () => {
+      if (!this.cfg()) return;
+      if (Date.now() - this._lastPull < PULL_THROTTLE) return;
+      this.doPull(false);
+    };
+    window.addEventListener('focus', this._onFocus);
+
+    this._timer = setInterval(() => {
+      if (this.state.syncState === 'synced') this.setState({ tick: this.state.tick + 1 });
+    }, 30000);
+
+    // 처음 열 때 원격 상태를 한 번 읽는다. 토큰이 없어도 공개 저장소면 읽기는 된다.
+    setTimeout(() => this.doPull(true), 0);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('focus', this._onFocus);
+    clearInterval(this._timer);
+    clearTimeout(this._pushT);
+  }
+
+  cfg() {
+    return (window.GHSync && window.GHSync.getConfig()) || null;
+  }
+
+  snapshot(over) {
+    const s = Object.assign({}, this.state, over || {});
+    return { version: 1, updatedAt: s.updatedAt, checks: s.checks, log: s.log, qs: s.qs };
+  }
+
+  persist(data) {
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+  }
+
+  /* 사용자가 무언가 바꿨을 때의 유일한 진입점. */
+  set(next) {
+    const updatedAt = new Date().toISOString();
+    const data = this.snapshot(Object.assign({}, next, { updatedAt }));
+    this.persist(data);
+    this.setState(Object.assign({}, next, { updatedAt }));
+    this.queuePush();
+  }
+
+  toggle(id) {
+    const checks = Object.assign({}, this.state.checks);
+    if (checks[id]) { delete checks[id]; } else { checks[id] = true; }
+    this.set({ checks });
+  }
+
+  editLog(i, field, value) {
+    const log = this.state.log.map((r, j) => (j === i ? Object.assign({}, r, { [field]: value }) : r));
+    this.set({ log });
+  }
+
+  /* ---------- GitHub 읽기 ---------- */
+
+  /* initial=true 면 조용히 실행하고, 실패해도 에러 배너를 띄우지 않는다. */
+  doPull(initial) {
+    const GH = window.GHSync;
+    if (!GH) return;
+    const cfg = this.cfg() || GH.inferRepo();
+    if (!cfg) return;
+
+    this._lastPull = Date.now();
+    if (!initial) this.setState({ syncState: 'pulling', syncMsg: '' });
+
+    GH.pull(cfg).then((res) => {
+      const authed = !!this.cfg();
+      if (!res || !res.state) {
+        // 아직 progress.json 이 없다 — 연결되어 있으면 지금 상태를 첫 커밋으로 올린다.
+        if (authed) { this.setState({ syncState: 'synced', lastSync: Date.now() }); this.doPush(); }
+        else this.setState({ syncState: 'off', syncMsg: '' });
+        return;
+      }
+      const remote = res.state;
+      this._baseRemoteAt = remote.updatedAt || '';
+      const localAt = this.state.updatedAt || '';
+
+      if ((remote.updatedAt || '') > localAt) {
+        const adopted = {
+          checks: remote.checks || {},
+          log: (remote.log && remote.log.length) ? remote.log : [{ d: '', w: '', m: '' }],
+          qs: remote.qs || [],
+          updatedAt: remote.updatedAt || ''
+        };
+        this.persist(Object.assign({ version: 1 }, adopted));
+        this.setState(Object.assign({}, adopted, {
+          syncState: authed ? 'synced' : 'off',
+          syncMsg: authed ? '' : '읽기 전용',
+          lastSync: Date.now()
+        }));
+      } else if (authed) {
+        const same = JSON.stringify(this.snapshot().checks) === JSON.stringify(remote.checks || {}) &&
+                     JSON.stringify(this.state.log) === JSON.stringify(remote.log || []) &&
+                     JSON.stringify(this.state.qs) === JSON.stringify(remote.qs || []);
+        if (same) this.setState({ syncState: 'synced', syncMsg: '', lastSync: Date.now() });
+        else this.doPush();
+      } else {
+        this.setState({ syncState: 'off', syncMsg: '읽기 전용' });
+      }
+    }).catch((e) => {
+      if (initial && !this.cfg()) return; // 비공개 저장소를 익명으로 읽으려 한 경우 등 — 조용히 넘어간다
+      this.setState({ syncState: 'error', syncMsg: e.message || String(e) });
+    });
+  }
+
+  /* ---------- GitHub 쓰기 ---------- */
+
+  queuePush() {
+    if (!this.cfg()) return;
+    clearTimeout(this._pushT);
+    this.setState({ syncState: 'saving', syncMsg: '' });
+    this._pushT = setTimeout(() => this.doPush(), PUSH_DEBOUNCE);
+  }
+
+  /* force=true 면 원격이 더 최신이어도 이 브라우저 내용으로 덮어쓴다. */
+  doPush(force) {
+    const GH = window.GHSync;
+    const cfg = this.cfg();
+    if (!GH || !cfg) return;
+    if (this._pushing) { this._pushAgain = true; return; }
+
+    this._pushing = true;
+    this.setState({ syncState: 'saving', syncMsg: '' });
+
+    const data = this.snapshot();
+    const finish = (patch) => {
+      this._pushing = false;
+      this.setState(patch);
+      if (this._pushAgain) { this._pushAgain = false; this.queuePush(); }
+    };
+
+    // 다른 기기가 그 사이에 올린 게 있는지 먼저 확인한다.
+    GH.pull(cfg).then((res) => {
+      const remoteAt = res && res.state ? (res.state.updatedAt || '') : null;
+      if (!force && remoteAt !== null && this._baseRemoteAt !== null && remoteAt !== this._baseRemoteAt) {
+        finish({
+          syncState: 'conflict',
+          syncMsg: '다른 기기에서 먼저 저장한 내용이 있습니다 (' + remoteAt + ').'
+        });
+        return null;
+      }
+      const done = Object.keys(data.checks).length;
+      return GH.push(cfg, [
+        { path: PROGRESS_PATH, content: JSON.stringify(data, null, 2) + '\n' },
+        { path: PLAN_PATH, content: buildMarkdown(data) }
+      ], 'progress: ' + done + '/' + TOTAL + ' 완료');
+    }).then((r) => {
+      if (!r) return;
+      this._baseRemoteAt = data.updatedAt;
+      this._lastPull = Date.now();
+      finish({ syncState: 'synced', syncMsg: '', lastSync: Date.now() });
+    }).catch((e) => {
+      finish({ syncState: 'error', syncMsg: e.message || String(e) });
+    });
+  }
+
+  /* ---------- 연결 폼 ---------- */
+
+  openForm() {
+    const GH = window.GHSync;
+    const cur = this.cfg();
+    const guess = (GH && GH.inferRepo()) || {};
+    this.setState({
+      formOpen: true,
+      formErr: '',
+      formBusy: false,
+      fOwner: (cur && cur.owner) || guess.owner || '',
+      fRepo: (cur && cur.repo) || guess.repo || '',
+      fBranch: (cur && cur.branch) || 'main',
+      fToken: (cur && cur.token) || ''
+    });
+  }
+
+  submitForm() {
+    const GH = window.GHSync;
+    const cfg = {
+      owner: (this.state.fOwner || '').trim(),
+      repo: (this.state.fRepo || '').trim(),
+      branch: (this.state.fBranch || '').trim() || 'main',
+      token: (this.state.fToken || '').trim()
+    };
+    if (!cfg.owner || !cfg.repo || !cfg.token) {
+      this.setState({ formErr: 'Owner, Repo, 토큰을 모두 입력하세요.' });
+      return;
+    }
+    this.setState({ formBusy: true, formErr: '' });
+    GH.verify(cfg).then(() => {
+      GH.setConfig(cfg);
+      this.setState({ formOpen: false, formBusy: false, fToken: '', syncState: 'pulling' });
+      this._baseRemoteAt = null;
+      this.doPull(false);
+    }).catch((e) => {
+      this.setState({ formBusy: false, formErr: e.message || String(e) });
+    });
+  }
+
+  disconnect() {
+    if (window.GHSync) window.GHSync.clearConfig();
+    clearTimeout(this._pushT);
+    this._baseRemoteAt = null;
+    this.setState({ syncState: 'off', syncMsg: '', formOpen: false });
+  }
+
+  /* ---------- 동기화 바 렌더 값 ---------- */
+
+  syncVals() {
+    const st = this.state.syncState;
+    const authed = !!this.cfg();
+    const color = {
+      off: 'var(--color-neutral-400)',
+      pulling: 'var(--color-process-yellow)',
+      saving: 'var(--color-process-yellow)',
+      synced: 'var(--color-accent)',
+      error: 'var(--color-accent-2)',
+      conflict: 'var(--color-accent-2)'
+    }[st] || 'var(--color-neutral-400)';
+
+    let label;
+    if (st === 'pulling') label = 'GitHub에서 불러오는 중…';
+    else if (st === 'saving') label = 'GitHub에 저장 중…';
+    else if (st === 'synced') label = 'GitHub 동기화됨 · ' + ago(this.state.lastSync);
+    else if (st === 'error') label = '동기화 실패 · ' + this.state.syncMsg;
+    else if (st === 'conflict') label = '충돌 · ' + this.state.syncMsg;
+    else if (this.state.syncMsg === '읽기 전용') label = '읽기 전용 — 체크하려면 GitHub을 연결하세요';
+    else label = 'GitHub 미연결 · 이 브라우저에만 저장됩니다';
+
+    return {
+      ghDot: { flex: '0 0 auto', width: 9, height: 9, borderRadius: '50%', background: color },
+      ghLabel: label,
+      ghShowActions: authed && !this.state.formOpen,
+      ghShowConnect: !authed && !this.state.formOpen,
+      ghShowForce: st === 'conflict',
+      ghFormOpen: this.state.formOpen,
+      ghFormErr: this.state.formErr,
+      ghHasFormErr: !!this.state.formErr,
+      ghSubmitLabel: this.state.formBusy ? '확인 중…' : '연결',
+      ghOwner: this.state.fOwner,
+      ghRepo: this.state.fRepo,
+      ghBranch: this.state.fBranch,
+      ghToken: this.state.fToken,
+      ghOnOwner: (e) => this.setState({ fOwner: e.target.value }),
+      ghOnRepo: (e) => this.setState({ fRepo: e.target.value }),
+      ghOnBranch: (e) => this.setState({ fBranch: e.target.value }),
+      ghOnToken: (e) => this.setState({ fToken: e.target.value }),
+      ghOpenForm: () => this.openForm(),
+      ghSubmit: () => this.submitForm(),
+      ghCancelForm: () => this.setState({ formOpen: false, formErr: '' }),
+      ghSyncNow: () => { clearTimeout(this._pushT); this.doPush(); },
+      ghReload: () => this.doPull(false),
+      ghForce: () => this.doPush(true),
+      ghDisconnect: () => this.disconnect()
+    };
+  }
+
+  /* ---------- 기존 렌더 값 ---------- */
+
+  itemView(id, raw) {
+    const t = typeof raw === 'string' ? raw : raw.t;
+    const hi = typeof raw === 'string' ? null : (raw.hi || null);
+    const done = !!this.state.checks[id];
+    const toggle = () => this.toggle(id);
+    return {
+      id, t, hi, done, toggle,
+      onKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } },
+      mark: done ? '✓' : '',
+      boxStyle: {
+        flex: '0 0 auto', width: 16, height: 16, marginTop: 5,
+        borderRadius: 2,
+        border: done ? '1px solid var(--color-accent)' : '1px solid color-mix(in srgb, var(--color-text) 35%, transparent)',
+        background: done ? 'var(--color-accent)' : 'transparent',
+        color: 'var(--color-bg)', fontSize: 11, lineHeight: '15px', textAlign: 'center'
+      },
+      textStyle: {
+        fontSize: 16, lineHeight: 1.5,
+        opacity: done ? 0.4 : 1,
+        textDecoration: done ? 'line-through' : 'none'
+      }
+    };
+  }
+
+  renderVals() {
+    const hideDone = this.state.hideDone;
+    const stages = STAGES.map((s, si) => {
+      const all = s.items.map((raw, ii) => this.itemView('s' + si + '-' + ii, raw));
+      const doneN = all.filter((i) => i.done).length;
+      return {
+        n: s.n, title: s.title, dur: s.dur, book: s.book, task: s.task,
+        notes: s.notes || [],
+        links: s.links || [],
+        linkLabel: (s.links && s.links.length) ? (s.book ? '교재 링크' : '참고 링크') : null,
+        items: hideDone ? all.filter((i) => !i.done) : all,
+        count: doneN + ' / ' + all.length,
+        bar: { height: '100%', width: (all.length ? (doneN / all.length) * 100 : 0) + '%', background: 'var(--color-accent)' }
+      };
+    });
+    const review = REVIEW.map((raw, i) => this.itemView('r-' + i, raw));
+    const reviewAll = review.length;
+    const reviewDone = review.filter((i) => i.done).length;
+    const flat = TOTAL;
+    const doneTotal = Object.keys(this.state.checks).length;
+
+    const log = this.state.log.map((row, i) => ({
+      d: row.d, w: row.w, m: row.m,
+      onD: (e) => this.editLog(i, 'd', e.target.value),
+      onW: (e) => this.editLog(i, 'w', e.target.value),
+      onM: (e) => this.editLog(i, 'm', e.target.value),
+      remove: () => this.set({ log: this.state.log.filter((_, j) => j !== i) })
+    }));
+
+    const qs = this.state.qs.map((t, i) => ({
+      t, remove: () => this.set({ qs: this.state.qs.filter((_, j) => j !== i) })
+    }));
+
+    const addQ = () => {
+      const t = (this.state.qInput || '').trim();
+      if (!t) return;
+      this.setState({ qInput: '' });
+      this.set({ qs: [...this.state.qs, t], qInput: '' });
+    };
+
+    return Object.assign({
+      stages, review,
+      reviewCount: reviewDone + ' / ' + reviewAll,
+      totalCount: doneTotal + ' / ' + flat,
+      pct: (flat ? Math.round((doneTotal / flat) * 100) : 0) + '%',
+      totalBar: { height: '100%', width: (flat ? (doneTotal / flat) * 100 : 0) + '%', background: 'var(--color-accent)' },
+      hideLabel: hideDone ? '완료 항목 보기' : '완료 항목 숨기기',
+      toggleHide: () => this.setState({ hideDone: !hideDone }),
+      resetAll: () => this.set({ checks: {} }),
+      log, qs,
+      qInput: this.state.qInput,
+      onQInput: (e) => this.setState({ qInput: e.target.value }),
+      onQKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); addQ(); } },
+      addQ,
+      addRow: () => this.set({ log: [...this.state.log, { d: '', w: '', m: '' }] })
+    }, this.syncVals());
+  }
+}
+</script>
+</body></html>
