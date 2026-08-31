@@ -2,7 +2,7 @@
 
 <!-- 이 파일은 planner(index.html)가 자동으로 생성합니다. 직접 수정하면 다음 동기화 때 덮어써집니다. -->
 
-진행률 **3%** (1 / 31) · 최종 갱신 2026-08-31T08:37:51.512Z
+진행률 **0%** (0 / 31) · 최종 갱신 2026-08-31T08:45:01.380Z
 
 ## 목표
 - 에이전트(클로드코드)가 짠 TS 코드를 **읽고, 이상한 곳을 잡아내고, 방향을 지시**할 수 있는 수준
@@ -17,7 +17,7 @@
 ---
 
 ## 0단계 — 환경 세팅 (1일)
-- [x] Node.js LTS 설치, node -v / npm -v 확인
+- [ ] Node.js LTS 설치, node -v / npm -v 확인
 - [ ] VS Code + 확장: ESLint, Prettier
 - [ ] 연습용 폴더 만들고 npm init -y → npm i -D typescript tsx → npx tsc --init
 - [ ] hello.ts 작성 후 npx tsx hello.ts 실행되는지 확인
