@@ -97,16 +97,54 @@
 
   /* ---------- 공개 동작 ---------- */
 
-  /* 토큰과 저장소를 검증한다. 쓰기 권한이 없으면 거부한다. */
+  function noWriteAccess(cfg) {
+    return new Error('이 토큰으로는 ' + cfg.owner + '/' + cfg.repo + ' 에 쓸 수 없습니다. ' +
+      'github.com/settings/personal-access-tokens 에서 토큰을 열고 ' +
+      'Repository access 에 이 저장소가 들어있는지, ' +
+      'Permissions → Repository permissions → Contents 가 "Read and write" 인지 확인하세요.');
+  }
+
+  /*
+   * 토큰과 저장소, 브랜치를 검증한다.
+   *
+   * GET /repos 의 permissions 는 "로그인한 사용자의 저장소 역할"이지 토큰에 부여된
+   * 권한이 아니다. 저장소 주인이면 Contents 가 read-only 인 토큰으로도 push:true 가
+   * 나오므로 그것만 보고 통과시키면 안 된다. 실제 쓰기 가능 여부는 빈 blob 을 하나
+   * 만들어 확인한다 — blob 은 트리나 커밋에 붙지 않으면 어디에도 나타나지 않고
+   * 나중에 GC 된다.
+   */
   function verify(cfg) {
-    return api(cfg, '/repos/' + cfg.owner + '/' + cfg.repo).then(function (repo) {
-      var perms = repo.permissions || {};
-      if (!perms.push) {
-        throw new Error('이 토큰에는 ' + cfg.owner + '/' + cfg.repo +
-          ' 의 쓰기(Contents: Read and write) 권한이 없습니다.');
-      }
-      return { defaultBranch: repo.default_branch, private: repo.private };
-    });
+    var base = '/repos/' + cfg.owner + '/' + cfg.repo;
+    var branch = cfg.branch || 'main';
+    var repoInfo;
+
+    return api(cfg, base)
+      .catch(function (e) {
+        if (e.status === 403 || e.status === 404) throw noWriteAccess(cfg);
+        throw e;
+      })
+      .then(function (repo) {
+        repoInfo = repo;
+        return api(cfg, base + '/git/ref/heads/' + branch).catch(function (e) {
+          if (e.status === 404) {
+            throw new Error('"' + branch + '" 브랜치가 없습니다. 기본 브랜치는 "' +
+              repo.default_branch + '" 입니다.');
+          }
+          throw e;
+        });
+      })
+      .then(function () {
+        return api(cfg, base + '/git/blobs', {
+          method: 'POST',
+          body: { content: '', encoding: 'utf-8' }
+        }).catch(function (e) {
+          if (e.status === 403 || e.status === 404) throw noWriteAccess(cfg);
+          throw e;
+        });
+      })
+      .then(function () {
+        return { defaultBranch: repoInfo.default_branch, private: repoInfo.private };
+      });
   }
 
   /* progress.json 을 읽는다. 없으면 null. */
@@ -182,6 +220,10 @@
         }).then(function () {
           return { commitSha: commit.sha, unchanged: false };
         });
+      })
+      .catch(function (e) {
+        if (e.status === 403) throw noWriteAccess(cfg);
+        throw e;
       });
   }
 
